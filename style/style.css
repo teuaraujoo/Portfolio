@@ -189,3 +189,23 @@ a.btn__linktree {
   object-fit: cover; /* cobre toda a área da caixa, cortando se necessário */
   margin-top: 10px;
 }
+
+.curriculo {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: 1.2;
+  margin: 20px;
+  font-size: 18px;
+}
+
+.curriculo__titulos {
+  font-size: 28px;
+  margin: 20px;
+}
+
+.curriculo__lista {
+  font-size: 18px;
+  margin: 20px;
+  padding-left: 20px;
+}
