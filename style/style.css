@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+
+:root{
+  --cor-primaria: #000000;
+  --cor-secundaria: #F6F6F6;
+  --cor-terciaria: #20ddfa;
+  --fonte-primaria: 'Krona One', sans-serif;
+  --fonte-secundaria: 'Montserrat', sans-serif;
+}
+
+/* reset geral */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background-color: var(--cor-primaria);
+  color: white;
+  font-family: var(--fonte-secundaria);
+}
+
+
+/* ========== NAVBAR ========== */
+.cabecalho {
+  padding: 20px 40px;   /* espaço interno */
+}
+
+.cabecalho__menu {
+  display: flex; /* usa flexbox */
+  justify-content: center;  /* centraliza horizontalmente */
+  align-items: center;      /* centraliza verticalmente */
+  gap: 2rem;                /* espaço entre os links */
+  padding: 20px 0;
+}
+
+.cabecalho__menu__link {
+  font-size: 1.2rem;
+  font-weight: 600;/* "grossura da fonte" ==> negrito */
+  color: white;
+  text-decoration: none; /* remove o sublinhado */
+}
+
+/* ========== HERO / APRESENTAÇÃO ========== */
+/* container principal: por padrão em coluna (mobile) */
+.apresentacao {
+  max-width: 1100px;  /* largura máxima do container */
+  margin: 30px auto;  /* centraliza horizontalmente */
+  padding: 30px;    /* espaço interno */
+  display: flex;    /* usa flexbox */
+  flex-direction: column;  /* mobile: empilha (conteúdo acima, imagem abaixo) */
+  gap: 24px;
+  align-items: center;
+}
+
+/* coluna de conteúdo (texto + botões) */
+.apresentacao__conteudo {
+  width: 100%;
+  text-align: center; /* mobile: centraliza o texto */
+}
+
+/* imagem em bloco separado */
+.apresentacao__imagem {
+  width: 320px;   /* largura fixa da caixa da imagem */
+  display: flex; /* usa flexbox para centralizar a imagem dentro da caixa */ /* opcional */ /* container flexível */
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center; /* centraliza verticalmente */
+}
+
+/* imagem responsiva e com border-radius */
+.img__rosto {
+  width: 100%; /* largura total da caixa */
+  height: auto; /* altura automática para manter proporção */
+  min-height: 320px; /* altura mínima para evitar que fique muito pequena */
+  border-radius: 20px 0 20px 0; /* cantos arredondados */
+  border: solid 2px; /* borda sólida */
+  border-color: var(--cor-terciaria); /* cor da borda */
+  display: block; /* remove espaço embaixo da imagem */
+  object-fit: cover; /* cobre toda a área da caixa, cortando se necessário */
+}
+
+/* Títulos e destaque */
+.apresentacao__conteudo__titulo {
+  font-size: 28px;
+  font-family: var(--fonte-primaria);/* fonte do título */
+  margin-bottom: 14px;/* espaço abaixo do título */
+  line-height: 1.05; /* espaçamento entre linhas */
+}
+
+.texto-destaque {
+  color: var(--cor-terciaria);
+}
+
+/* Parágrafo */
+.apresentacao__conteudo__texto {
+  font-size: 15px;
+  color: #d1d6d8;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+/* Botões (empilhados/centralizados em mobile) */
+.btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* botões alinhados à esquerda da coluna */
+  margin-top: 12px;
+  }
+
+/* seletor de classes: estiliza a base dos "botões" */
+
+a.btn {
+  display: inline-flex; /* usa inline-flex para alinhar texto e ícone */
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; 
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 26px;  /* espaço interno */
+  background: var(--cor-terciaria);
+  color: #001017;
+  border-radius: 10px; /* cantos arredondados */
+  text-decoration: none; /* tira o sublinhado */
+  min-width: 150px; /* largura mínima para os botões */
+}
+
+/* seletor de classes: estiliza a base dos "botões" outline*/
+a.btn.outline {
+  background: transparent;
+  color: var(--cor-terciaria);
+  border: 2px solid var(--cor-terciaria);
+}
+
+/* ========== LAYOUT PARA DESKTOP (larguras maiores) ========== */
+@media (min-width: 880px) {
+
+  /* coloca as colunas lado a lado: texto à esquerda, imagem à direita */
+  .apresentacao {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .apresentacao__conteudo {
+    width: 60%;
+    text-align: left; /* desktop: texto alinhado à esquerda */
+  }
+
+  .apresentacao__imagem {
+    width: 360px; /* tamanho como na imagem de referência */
+  }
+
+  .apresentacao__conteudo__titulo {
+    font-size: 36px;
+  }
+}
+
+.titulo__linktree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: var(--fonte-primaria);/* fonte do título */
+  margin-bottom: 14px;/* espaço abaixo do título */
+  line-height: 1.05; /* espaçamento entre linhas */
+
+}
+
+a.btn__linktree {
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; 
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 26px;  /* espaço interno */
+  background: var(--cor-terciaria);
+  color: #001017;
+  border-radius: 10px; /* cantos arredondados */
+  text-decoration: none; /* tira o sublinhado */
+  min-width: 150px; /* largura mínima para os botões */
+}
+
+.img__linktree {
+  width: 100px; /* largura total da caixa */
+  height: auto; /* altura automática para manter proporção */
+  min-height: 100px; /* altura mínima para evitar que fique muito pequena */
+  border-radius: 100px; /* cantos arredondados */
+  border: solid 2px; /* borda sólida */
+  border-color: var(--cor-terciaria); /* cor da borda */
+  display: block; /* remove espaço embaixo da imagem */
+  object-fit: cover; /* cobre toda a área da caixa, cortando se necessário */
+  margin-top: 10px;
+}
