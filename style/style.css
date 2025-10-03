@@ -3,7 +3,7 @@
 :root{
   --cor-primaria: #000000;
   --cor-secundaria: #F6F6F6;
-  --cor-terciaria: #20ddfa;
+  --cor-terciaria: hsl(188, 96%, 55%);
   --fonte-primaria: 'Krona One', sans-serif;
   --fonte-secundaria: 'Montserrat', sans-serif;
 }
@@ -25,18 +25,22 @@ body {
 }
 
 .cabecalho__menu {
+
   display: flex; /* usa flexbox */
   justify-content: center;  /* centraliza horizontalmente */
   align-items: center;      /* centraliza verticalmente */
   gap: 2rem;                /* espaço entre os links */
   padding: 20px 0;
+
 }
 
 .cabecalho__menu__link {
+  
   font-size: 1.2rem;
   font-weight: 600;/* "grossura da fonte" ==> negrito */
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none; /* remove o sublinhado */
+
 }
 
 /* ========== HERO / APRESENTAÇÃO ========== */
@@ -101,7 +105,7 @@ body {
 .btns {
   display: flex;
   gap: 14px;
-  flex-wrap: wrap;
+  flex-wrap: wrap;  
   justify-content: flex-start; /* botões alinhados à esquerda da coluna */
   margin-top: 12px;
   }
@@ -208,4 +212,14 @@ a.btn__linktree {
   font-size: 18px;
   margin: 20px;
   padding-left: 20px;
+}
+
+footer  {
+  font-size: 18px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  background-color: var(--cor-terciaria);
+  color: #000000; 
 }
