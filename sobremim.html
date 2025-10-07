@@ -1,42 +1,136 @@
+<!--
+  Portfolio Moderno - Página Sobre (sobremim.html)
+  
+  Objetivo: Página sobre aprimorada com design moderno glass-morphism, interações suaves e recursos de acessibilidade
+  Suporte de Navegadores: Navegadores modernos com CSS Grid, Flexbox, Propriedades Customizadas e backdrop-filter
+  Acessibilidade: Compatível com WCAG 2.1 AA com links de pular, navegação por teclado e suporte a movimento reduzido
+  
+  COMO COLAR SEU CONTEÚDO ORIGINAL:
+  - Substitua o conteúdo dentro de <main class="apresentacao"> com seu esqueleto original
+  - Mantenha a estrutura semântica existente (header, nav, main, section, aside, footer)
+  - Atualize o atributo aria-current="page" no link de navegação ativo
+  - Mantenha todos os nomes de classes e IDs existentes para compatibilidade com CSS
+-->
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style/style.css" />
-    <title>Portfolio</title>
-  </head>
-  <body>
-    <header class="cabecalho" role="banner">
-      <!--header: cabeçalho da página-->
-      <!--role: descreve a função-->
-      <!-- aria-label: descreve o conteúdo-->
-      <nav class="cabecalho__menu" role="navegação" aria-label="Menu principal">
-        <a class="cabecalho__menu__link" href="index.html">Home</a>
-        <a class="cabecalho__menu__link" href="sobremim.html">Sobre</a >
-        <a class="cabecalho__menu__link" href="curriculo.html" >Currículo</a >
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sobre Mateus Araujo - Desenvolvedor Junior apaixonado por programação, design e tecnologia">
+  <meta name="keywords" content="desenvolvedor, programação, design, tecnologia, inteligência artificial">
+  <meta name="author" content="Mateus Araujo">
+  
+  <!-- Pré-carregar fontes críticas para melhor performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Link para a folha de estilos aprimorada -->
+  <link rel="stylesheet" href="style.css">
+  
+  <title>Sobre Mim - Mateus Araujo</title>
+</head>
+<body class="animated">
+  <!-- Link de pular para acessibilidade - permite usuários de teclado pular para o conteúdo principal -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  
+  <!-- Cabeçalho com navegação aprimorada -->
+  <header class="cabecalho" role="banner">
+    <nav class="cabecalho__menu" role="navigation" aria-label="Menu principal">
+      <a class="cabecalho__menu__link" href="index.html">Home</a>
+      <!-- Indicador de página ativa: adicione aria-current="page" ao link da página atual -->
+      <a class="cabecalho__menu__link" href="sobremim.html" aria-current="page">Sobre</a>
+      <a class="cabecalho__menu__link" href="curriculo.html">Currículo</a>
+    </nav>
+  </header>
 
-    <main class="apresentacao">
-      <!-- coluna esquerda: texto + botões -->
-      <section class="apresentacao__conteudo">
-        <h1 class="apresentacao__conteudo__titulo">Sobre Mim</h1>
+  <!-- Área de conteúdo principal com estrutura aprimorada -->
+  <main class="apresentacao" id="main-content" role="main">
+    <!-- Seção de conteúdo com semântica melhorada e layout aprimorado -->
+    <section class="apresentacao__conteudo" aria-labelledby="about-heading">
+      <h1 class="apresentacao__conteudo__titulo" id="about-heading">Sobre Mim</h1>
+      
+      <!-- Conteúdo aprimorado com melhor tipografia e estrutura -->
+      <div class="about-content">
         <p class="apresentacao__conteudo__texto">
-  Olá, eu sou o Mateus Araujo, tenho 17 anos, sou Desenvolvedor Junior, apaixonado por programação, design, inteligência artificial e tecnologia em geral.
-Gosto de transformar ideias em projetos práticos e de estar sempre aprendendo algo novo que me desafie a crescer. 
-Meu objetivo é seguir carreira na área de tecnologia e, a cada passo, evoluir minhas habilidades para criar soluções criativas e úteis.
+          Olá, eu sou o Mateus Araujo, tenho 17 anos, sou Desenvolvedor Junior, 
+          apaixonado por programação, design, inteligência artificial e tecnologia em geral.
         </p>
-      </section>
+        
+        <p class="apresentacao__conteudo__texto">
+          Gosto de transformar ideias em projetos práticos e de estar sempre aprendendo 
+          algo novo que me desafie a crescer.
+        </p>
+        
+        <p class="apresentacao__conteudo__texto">
+          Meu objetivo é seguir carreira na área de tecnologia e, a cada passo, 
+          evoluir minhas habilidades para criar soluções criativas e úteis.
+        </p>
+      </div>
 
-      <!-- coluna a direita(aside): imagem -->
-      <!--aside: conteúdo complementar, nesse caso a imagem serve como conteúdo ccomplementar do texto <main section>-->
-      <aside class="apresentacao__imagem">
-        <img class="img__rosto" src="/assets/myface.jpg" />
-      </aside>
-    </main>
+      <!-- Container de botões aprimorado com melhor acessibilidade -->
+      <div class="btns" role="group" aria-label="Links de contato">
+        <a class="btn" href="https://www.instagram.com/teu.araujoo/" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Visite meu perfil no Instagram (abre em nova aba)">
+          Instagram
+        </a>
+        <a class="btn outline" href="https://github.com/teuaraujoo" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Visite meu perfil no GitHub (abre em nova aba)">
+          GitHub
+        </a>
+      </div>
+    </section>
 
-      <footer>Desenvolvido por Mateus Araujo</footer>
-  </body>
+    <!-- Seção de imagem com acessibilidade aprimorada -->
+    <aside class="apresentacao__imagem" aria-label="Foto de perfil de Mateus Araujo">
+      <img class="img__rosto" 
+           src="/assets/myface.jpg" 
+           alt="Foto de perfil de Mateus Araujo, desenvolvedor Front-end"
+           width="400" 
+           height="400"
+           loading="lazy">
+    </aside>
+  </main>
+
+  <!-- Rodapé aprimorado com marcação semântica -->
+  <footer role="contentinfo">
+    <p>Desenvolvido por Mateus Araujo</p>
+  </footer>
+
+  <!-- 
+    OPCIONAL: Alternativa de layout com abas em página única
+    Descomente a seção abaixo para converter isso em uma experiência de página única
+    com transições animadas de abas. Isso elimina carregamentos de página, mas requer
+    reestruturação do seu conteúdo em abas.
+    
+    <section class="tabbed-content" aria-label="Conteúdo em abas">
+      <div class="tab-controls" role="tablist" aria-label="Navegação por abas">
+        <input type="radio" id="tab-home" name="content-tabs">
+        <label for="tab-home" role="tab" aria-selected="false">Home</label>
+        
+        <input type="radio" id="tab-about" name="content-tabs" checked>
+        <label for="tab-about" role="tab" aria-selected="true">Sobre</label>
+        
+        <input type="radio" id="tab-resume" name="content-tabs">
+        <label for="tab-resume" role="tab" aria-selected="false">Currículo</label>
+      </div>
+      
+      <div class="tab-panels">
+        <div class="tab-panel" id="home-panel" role="tabpanel" aria-labelledby="tab-home">
+          <!-- Conteúdo da Home aqui -->
+        </div>
+        <div class="tab-panel" id="about-panel" role="tabpanel" aria-labelledby="tab-about">
+          <!-- Conteúdo Sobre aqui -->
+        </div>
+        <div class="tab-panel" id="resume-panel" role="tabpanel" aria-labelledby="tab-resume">
+          <!-- Conteúdo do Currículo aqui -->
+        </div>
+      </div>
+    </section>
+  -->
+</body>
 </html>

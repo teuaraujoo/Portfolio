@@ -1,0 +1,835 @@
+/*
+ * Folha de Estilos do Portfolio Moderno
+ * 
+ * Objetivo: Transformar portfolio existente em experiência moderna, acessível e apenas CSS
+ * Suporte de Navegadores: Navegadores modernos com CSS Grid, Flexbox, Propriedades Customizadas e backdrop-filter
+ * Acessibilidade: Compatível com WCAG 2.1 AA com navegação por teclado, indicadores de foco e suporte a movimento reduzido
+ * 
+ * Características Principais:
+ * - Design glass-morphism com fallbacks para backdrop-filter
+ * - Efeitos de hover e micro-interações apenas CSS
+ * - Design responsivo mobile-first
+ * - Transições suaves com suporte a movimento reduzido
+ * - Estados de foco acessíveis e links de pular
+ */
+
+/* ===== PROPRIEDADES CSS CUSTOMIZADAS (TOKENS DE TEMA) ===== */
+:root {
+  /* Paleta de Cores - Neutro moderno com destaque ciano */
+  --color-primary: #0a0a0a;           /* Preto profundo para fundos */
+  --color-secondary: #f8f9fa;         /* Branco sujo para texto */
+  --color-accent: #00d4ff;            /* Ciano brilhante para destaques */
+  --color-accent-dark: #0099cc;       /* Ciano mais escuro para estados de hover */
+  --color-surface: rgba(255, 255, 255, 0.05);  /* Superfície de vidro */
+  --color-surface-hover: rgba(255, 255, 255, 0.1);  /* Superfície de vidro no hover */
+  --color-border: rgba(255, 255, 255, 0.1);    /* Bordas sutis */
+  
+  /* Tipografia */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Escala de Espaçamento */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  
+  /* Raio da Borda */
+  --radius-sm: 0.375rem;  /* 6px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;  /* Círculo completo */
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.3);  /* Efeito brilhante para elementos de destaque */
+  
+  /* Transições */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 250ms ease-out;
+  --transition-slow: 350ms ease-out;
+  --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Escala Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* ===== RESET E ESTILOS BASE ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* Rolagem suave para links âncora */
+  font-size: 16px; /* Tamanho de fonte base para cálculos rem */
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.6;
+  color: var(--color-secondary);
+  background: var(--color-primary);
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevenir rolagem horizontal */
+  
+  /* Animação de carregamento de página apenas CSS - executa a cada carregamento de página */
+  animation: pageEnter 0.6s ease-out;
+}
+
+/* Animação de entrada da página - cria ilusão de transições suaves entre páginas */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respeitar preferências de movimento do usuário */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  body {
+    animation: none;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== LINK DE PULAR (ACESSIBILIDADE) ===== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  padding: var(--space-sm) var(--space-md);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  z-index: var(--z-tooltip);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 6px; /* Move para a visualização quando focado */
+}
+
+/* ===== CABEÇALHO E NAVEGAÇÃO ===== */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  padding: var(--space-md) var(--space-lg);
+  
+  /* Fundo glass-morphism com fallback */
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); /* Suporte Safari */
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Fallback para navegadores sem suporte a backdrop-filter */
+@supports not (backdrop-filter: blur(20px)) {
+  .cabecalho {
+    background: rgba(10, 10, 10, 0.95); /* Fallback mais opaco */
+  }
+}
+
+.cabecalho__menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cabecalho__menu__link {
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary);
+  text-decoration: none;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  
+  /* Create larger hit area for better touch targets */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: var(--radius-lg);
+    background: transparent;
+    transition: background var(--transition-fast);
+  }
+}
+
+/* Hover effect with subtle background and glow */
+.cabecalho__menu__link:hover {
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.cabecalho__menu__link:hover::before {
+  background: var(--color-surface-hover);
+}
+
+/* Active page indicator */
+.cabecalho__menu__link[aria-current="page"] {
+  color: var(--color-accent);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Focus states for keyboard navigation */
+.cabecalho__menu__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  color: var(--color-accent);
+}
+
+/* Animated underline effect */
+.cabecalho__menu__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transition: all var(--transition-normal);
+  transform: translateX(-50%);
+}
+
+.cabecalho__menu__link:hover::after,
+.cabecalho__menu__link[aria-current="page"]::after {
+  width: 100%;
+}
+
+/* ===== MAIN CONTENT AREA ===== */
+.apresentacao {
+  max-width: 1200px;
+  margin: var(--space-3xl) auto;
+  padding: 0 var(--space-lg);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  min-height: calc(100vh - 200px); /* Full viewport minus header/footer */
+}
+
+/* Content section styling */
+.apresentacao__conteudo {
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out 0.2s both; /* Staggered entrance */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hierarquia tipográfica */
+.apresentacao__conteudo__titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Tipografia responsiva */
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  margin-bottom: var(--space-lg);
+  color: var(--color-secondary);
+}
+
+.texto-destaque {
+  color: var(--color-accent);
+  position: relative;
+  display: inline-block;
+}
+
+/* Subtle glow effect on highlighted text */
+.texto-destaque::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-secondary);
+  opacity: 0.1;
+  border-radius: var(--radius-sm);
+  z-index: -1;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+
+.apresentacao__conteudo__texto {
+  font-size: 1.125rem;
+  color: rgba(248, 249, 250, 0.8);
+  line-height: 1.7;
+  margin-bottom: var(--space-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== ESTILOS DE BOTÕES ===== */
+.btns {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-xl);
+  position: relative;
+  z-index: 0; /* Garantir que fique abaixo do conteúdo das abas */
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  min-width: 160px;
+  transition: all var(--transition-normal);
+  overflow: hidden; /* Contain ripple effects */
+  
+  /* Glass-morphism background */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
+  
+  /* 3D tilt effect on hover */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Primary button (filled) */
+.btn:not(.outline) {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+  color: var(--color-primary);
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* Outline button */
+.btn.outline {
+  background: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+}
+
+/* Hover effects */
+.btn:hover {
+  transform: translateY(-3px) rotateX(5deg);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.btn:not(.outline):hover {
+  background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+}
+
+.btn.outline:hover {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
+/* Active/pressed state */
+.btn:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all var(--transition-fast);
+}
+
+/* Ripple effect using pseudo-element */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Focus states */
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ===== IMAGE SECTION ===== */
+.apresentacao__imagem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out 0.4s both; /* Delayed entrance */
+}
+
+.img__rosto {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 20px 0 20px 0;
+  border: 3px solid var(--color-accent);
+  object-fit: cover;
+  transition: all var(--transition-slow);
+  
+  /* Glass-morphism container */
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+  
+  /* 3D hover effect */
+  transform-style: preserve-3d;
+}
+
+.img__rosto:hover {
+  transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(0, 212, 255, 0.4);
+  border-color: var(--color-accent-dark);
+}
+
+/* ===== CURRICULUM PAGE SPECIFIC STYLES ===== */
+.curriculo__titulos {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  margin: var(--space-xl) 0 var(--space-lg) 0;
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated underline for section titles */
+.curriculo__titulos::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dark));
+  border-radius: var(--radius-full);
+  animation: expandWidth 0.8s ease-out 0.5s forwards;
+}
+
+@keyframes expandWidth {
+  to { width: 100%; }
+}
+
+.curriculo {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(248, 249, 250, 0.9);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.curriculo__lista {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0;
+  position: relative;
+  z-index: 2; /* Garantir que a lista fique acima de outros elementos */
+}
+
+.curriculo__lista li {
+  position: relative;
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-normal);
+  padding-left: var(--space-2xl); /* Espaço para bullet personalizado */
+  z-index: 2; /* Garantir que cada item da lista fique acima */
+}
+
+/* Custom bullet points */
+.curriculo__lista li::before {
+  content: '▶';
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  transition: transform var(--transition-fast);
+}
+
+.curriculo__lista li:hover {
+  transform: translateX(8px);
+  background: var(--color-surface-hover);
+  border-color: var(--color-accent);
+}
+
+.curriculo__lista li:hover::before {
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+  color: var(--color-primary);
+  text-align: center;
+  padding: var(--space-xl);
+  font-weight: var(--font-weight-semibold);
+  font-size: 1.1rem;
+  margin-top: var(--space-3xl);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+/* Tablet and up */
+@media (min-width: 768px) {
+  .apresentacao {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    text-align: left;
+  }
+  
+  .apresentacao__conteudo {
+    text-align: left;
+  }
+  
+  .btns {
+    justify-content: flex-start;
+  }
+  
+  .cabecalho__menu {
+    gap: var(--space-3xl);
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .apresentacao {
+    padding: 0 var(--space-2xl);
+  }
+  
+  .cabecalho {
+    padding: var(--space-lg) var(--space-2xl);
+  }
+  
+  .img__rosto {
+    max-width: 450px;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+  .apresentacao {
+    max-width: 1400px;
+  }
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: rgba(255, 255, 255, 0.3);
+    --color-surface: rgba(255, 255, 255, 0.1);
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+}
+
+/* Focus indicators for all interactive elements */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Ensure sufficient color contrast */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-primary: #ffffff;
+    --color-secondary: #1a1a1a;
+    --color-surface: rgba(0, 0, 0, 0.05);
+    --color-surface-hover: rgba(0, 0, 0, 0.1);
+    --color-border: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ===== INTERFACE DE ABAS APENAS CSS ===== */
+.resume-tabs {
+  margin-top: var(--space-xl);
+}
+
+.tab-controls {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-sm);
+}
+
+/* Ocultar inputs de rádio mas mantê-los acessíveis */
+.resume-tabs input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tab-controls label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: var(--font-weight-medium);
+  color: rgba(248, 249, 250, 0.7);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+/* Estilo da aba ativa */
+#tab-experiences:checked ~ .tab-controls label[for="tab-experiences"],
+#tab-studies:checked ~ .tab-controls label[for="tab-studies"] {
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Efeitos de hover para abas */
+.tab-controls label:hover {
+  color: var(--color-accent);
+  background: var(--color-surface-hover);
+  transform: translateY(-2px);
+}
+
+/* Estados de foco para navegação por teclado */
+.tab-controls label:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Container dos painéis de aba */
+.tab-panels {
+  position: relative;
+  min-height: 400px; /* Altura mínima aumentada para acomodar o conteúdo */
+  margin-bottom: var(--space-xl); /* Espaço extra para evitar sobreposição com botões */
+}
+
+.tab-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--transition-slow);
+  pointer-events: none;
+  z-index: 1; /* Garantir que fique acima de outros elementos */
+}
+
+/* Lógica simplificada das abas - apenas um painel visível por vez */
+#experiences-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 10;
+  position: relative;
+}
+
+#studies-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Quando a aba de estudos for selecionada */
+#tab-studies:checked ~ .tab-panels #experiences-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#tab-studies:checked ~ .tab-panels #studies-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 10;
+  position: relative;
+}
+
+/* Quando a aba de experiências for selecionada (volta ao padrão) */
+#tab-experiences:checked ~ .tab-panels #studies-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#tab-experiences:checked ~ .tab-panels #experiences-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 10;
+  position: relative;
+}
+
+/* Garantir espaçamento adequado dentro dos painéis */
+.tab-panel {
+  padding: var(--space-md) 0;
+  width: 100%; /* Garantir largura total */
+  box-sizing: border-box; /* Incluir padding na largura */
+}
+
+.tab-panel .curriculo__titulos {
+  margin-top: 0; /* Remover margem superior extra */
+  margin-bottom: var(--space-md); /* Espaçamento consistente */
+}
+
+.tab-panel .curriculo__lista {
+  margin-bottom: 0; /* Remover margem inferior extra */
+  margin-top: 0; /* Remover margem superior extra */
+}
+
+/* Garantir que os itens da lista sejam exibidos corretamente */
+.tab-panel .curriculo__lista li {
+  display: block; /* Garantir que cada item seja exibido em bloco */
+  width: 100%; /* Largura total */
+  box-sizing: border-box; /* Incluir padding na largura */
+  position: relative; /* Garantir posicionamento relativo */
+  z-index: 5; /* Z-index específico para itens da lista */
+}
+
+/* Garantir que o conteúdo dos painéis não se sobreponha */
+.tab-panel {
+  overflow: hidden; /* Evitar overflow que cause sobreposição */
+}
+
+/* Garantir que não haja sobreposição de texto */
+.resume-tabs .tab-panels {
+  position: relative;
+  overflow: hidden;
+}
+
+.resume-tabs .tab-panel {
+  will-change: opacity, transform; /* Otimizar animações */
+}
+
+/* Garantir que o painel ativo tenha prioridade visual */
+.resume-tabs .tab-panel[style*="opacity: 1"] {
+  z-index: 100 !important;
+}
+
+.resume-tabs .tab-panel[style*="opacity: 0"] {
+  z-index: 1 !important;
+}
+
+/* ===== ESTILOS DE IMPRESSÃO ===== */
+@media print {
+  .cabecalho,
+  .btns,
+  footer {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .apresentacao {
+    margin: 0;
+    padding: 0;
+    grid-template-columns: 1fr;
+  }
+  
+  /* Mostrar todos os painéis de aba na impressão */
+  .tab-panel {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    page-break-inside: avoid;
+  }
+  
+  .tab-controls {
+    display: none;
+  }
+}
